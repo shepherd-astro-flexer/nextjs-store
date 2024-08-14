@@ -8,6 +8,12 @@ function HomePage() {
       <Button variant="outline" size="default" className="capitalize">
         submit
       </Button>
+      {/* <Link href="/about" className={buttonVariants({ variant: "outline" })}>
+        About
+      </Link>
+      <Button asChild>
+        <Link href="">This is a</Link>
+      </Button> */}
     </div>
   );
 }

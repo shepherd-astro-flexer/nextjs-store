@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaCartShopping } from "react-icons/fa6";
 
 async function CartButton() {
   // temp
@@ -14,7 +14,7 @@ async function CartButton() {
       className="flex justify-center items-center relative"
     >
       <Link href="/cart">
-        <FaShoppingCart />
+        <FaCartShopping />
         <span className="absolute -top-3 -right-3 bg-primary h-6 w-6 rounded-full text-xs flex justify-center items-center text-white">
           {itemsInCart}
         </span>
