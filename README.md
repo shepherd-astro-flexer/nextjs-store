@@ -479,6 +479,7 @@ In development, the command next dev clears Node.js cache on run. This in turn i
 (Prisma Instance)[https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices#solution]
 
 - create utils/db.ts
+  test
 
 ```ts
 import { PrismaClient } from "@prisma/client";
