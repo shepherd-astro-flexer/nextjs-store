@@ -14,7 +14,7 @@ async function CartButton() {
       className="flex justify-center items-center relative"
     >
       <Link href="/cart">
-        <FaCartShopping />
+        <FaCartShopping className="w-6 h-6" />
         <span className="absolute -top-3 -right-3 bg-primary h-6 w-6 rounded-full text-xs flex justify-center items-center text-white">
           {itemsInCart}
         </span>

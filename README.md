@@ -87,7 +87,7 @@ export default HomePage;
 ```
 
 ```sh
-
+npx shadcn-ui@latest add breadcrumb card checkbox dropdown-menu input label popover select separator table textarea toast skeleton carousel
 ```
 
 - components
@@ -933,7 +933,7 @@ function ProductsGrid({ products }: { products: Product[] }) {
                       src={image}
                       alt={name}
                       fill
-                      sizes="(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw"
+                      sizes="(max-width:768) 100vw,(max-width:1200) 50vw,33vw"
                       priority
                       className="rounded w-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                     />

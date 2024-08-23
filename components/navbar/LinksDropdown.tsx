@@ -9,6 +9,7 @@ import { LuAlignLeft } from "react-icons/lu";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { links } from "@/utils/links";
+import prisma from "@/utils/db";
 
 function LinksDropdown() {
   return (
