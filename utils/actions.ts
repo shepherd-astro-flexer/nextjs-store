@@ -1,6 +1,8 @@
 import db from "@/utils/db";
 
 export const fetchFeaturedProducts = async () => {
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const products = await db.product.findMany({
     where: {
       featured: true,
