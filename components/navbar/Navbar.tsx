@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Container from "../global/Container";
 import CartButton from "./CartButton";
 import { ModeToggle as DarkMode } from "./DarkMode";
@@ -10,7 +11,9 @@ function Navbar() {
     <nav className="border-b">
       <Container className="flex flex-col sm:flex-row sm:justify-between sm:items-center py-8 flex-wrap">
         <Logo />
-        <NavSearch />
+        <Suspense>
+          <NavSearch />
+        </Suspense>
         <div className="flex gap-4 items-center">
           <CartButton />
           <DarkMode />

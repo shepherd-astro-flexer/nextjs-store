@@ -1,4 +1,5 @@
 import db from "@/utils/db";
+import { redirect } from "next/navigation";
 
 export const fetchFeaturedProducts = async () => {
   await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -13,7 +14,7 @@ export const fetchFeaturedProducts = async () => {
 };
 
 export const fetchAllProducts = async ({ search = "" }: { search: string }) => {
-  const products = await db.product.findMany({
+  const products = db.product.findMany({
     where: {
       OR: [
         { name: { contains: search, mode: "insensitive" } },
@@ -26,4 +27,19 @@ export const fetchAllProducts = async ({ search = "" }: { search: string }) => {
   });
 
   return products;
+};
+
+export const fetchSingleProduct = async ({
+  productId,
+}: {
+  productId: string;
+}) => {
+  const product = await db.product.findUnique({
+    where: {
+      id: productId,
+    },
+  });
+
+  if (!product) redirect("/");
+  return product;
 };
