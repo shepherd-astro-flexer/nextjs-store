@@ -39,7 +39,8 @@ export const fetchSingleProduct = async ({
       id: productId,
     },
   });
-
+  // ! If the product doesn't exist we redirect to the homepage
+  // ? If we don't do this if block and the product doesn't exist, we are going to return null, so we will have an error
   if (!product) redirect("/");
   return product;
 };

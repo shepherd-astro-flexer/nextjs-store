@@ -15,27 +15,30 @@ async function ProductDetails({ params }: { params: { productId: string } }) {
   return (
     <section>
       <BreadCrumbs name={name} />
-      <div className="grid gap-12 lg:grid-cols-2 mt-8">
+      <div className="grid gap-y-8 lg:gap-16 lg:grid-cols-2 mt-8">
         {/* Image */}
-        <div className="relative h-96 w-96 lg:w-auto">
+        <div className="relative h-full w-96 lg:w-auto">
           <Image
             src={image}
             alt="name"
             fill
             priority
-            className="rounded-lg object-cover "
+            className="rounded-lg object-cover w-full"
+            sizes="(max-width:768px) 100vw, (max-width: 1200) 50vw, 33vw"
           />
         </div>
         {/* Details */}
         <div>
-          <div className="flex items-center">
-            <h1 className="font-bold text-3xl capitalize mr-6">{name}</h1>
+          <div className="flex items-center gap-x-6">
+            <h1 className="font-bold text-3xl capitalize">{name}</h1>
             <FavoriteToggleButton productId={productId} />
           </div>
           <ProductRating />
-          <p className="text-xl my-4 font-medium">{company}</p>
-          <span className="p-2 rounded bg-muted mt-4">{dollarsAmount}</span>
-          <p className="mt-6 text-muted-foreground">{description}</p>
+          <p className="text-xl mt-2 font-medium">{company}</p>
+          <p className="p-2 rounded bg-muted mt-3 inline-block">
+            {dollarsAmount}
+          </p>
+          <p className="mt-6 text-muted-foreground leading-6">{description}</p>
           <AddToCart productId={productId} />
         </div>
       </div>
