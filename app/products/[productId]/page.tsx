@@ -17,14 +17,14 @@ async function ProductDetails({ params }: { params: { productId: string } }) {
       <BreadCrumbs name={name} />
       <div className="grid gap-y-8 lg:gap-16 lg:grid-cols-2 mt-8">
         {/* Image */}
-        <div className="relative h-full w-96 lg:w-auto">
+        <div className="relative w-96 h-96 lg:h-full lg:w-full">
           <Image
             src={image}
             alt="name"
             fill
             priority
             className="rounded-lg object-cover w-full"
-            sizes="(max-width:768px) 100vw, (max-width: 1200) 50vw, 33vw"
+            sizes="(max-width:768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
         {/* Details */}
@@ -38,7 +38,7 @@ async function ProductDetails({ params }: { params: { productId: string } }) {
           <p className="p-2 rounded bg-muted mt-3 inline-block">
             {dollarsAmount}
           </p>
-          <p className="mt-6 text-muted-foreground leading-6">{description}</p>
+          <p className="mt-6 text-muted-foreground leading-8">{description}</p>
           <AddToCart productId={productId} />
         </div>
       </div>
