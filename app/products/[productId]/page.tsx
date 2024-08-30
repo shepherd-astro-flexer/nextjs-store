@@ -33,7 +33,7 @@ async function ProductDetails({ params }: { params: { productId: string } }) {
             <h1 className="font-bold text-3xl capitalize">{name}</h1>
             <FavoriteToggleButton productId={productId} />
           </div>
-          <ProductRating />
+          <ProductRating productId={productId} />
           <p className="text-xl mt-2 font-medium">{company}</p>
           <p className="p-2 rounded bg-muted mt-3 inline-block">
             {dollarsAmount}
