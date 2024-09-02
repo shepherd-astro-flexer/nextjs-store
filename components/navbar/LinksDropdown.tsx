@@ -13,8 +13,11 @@ import UserIcon from "./UserIcon";
 
 import SignOutLink from "./SignOutLink";
 import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
 function LinksDropdown() {
+  const isAdmin = auth().userId === process.env.ADMIN_USER_ID;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -40,6 +43,8 @@ function LinksDropdown() {
         <SignedIn>
           {links.map((link) => {
             const { href, label } = link;
+            // Once we try to render the dashboard link and the user is not an admin, we just return null
+            if (label === "dashboard" && !isAdmin) return null;
 
             return (
               <DropdownMenuItem key={href}>

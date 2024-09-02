@@ -8,7 +8,7 @@ function SignOutLink() {
 
   const handleSignOut = () => {
     toast({
-      description: "Logged out successfully!",
+      description: "Logged out successful.",
     });
   };
   // This authentication button by clerk is an unstyled button so we are going to nest a regular button element and then style it instead.
