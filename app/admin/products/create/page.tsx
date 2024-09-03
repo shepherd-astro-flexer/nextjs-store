@@ -1,3 +1,4 @@
+import { SubmitButton } from "@/components/form/Buttons";
 import FormInput from "@/components/form/FormInput";
 import ImageInput from "@/components/form/ImageInput";
 import { Button } from "@/components/ui/button";
@@ -28,9 +29,7 @@ function CreateProductPage() {
             defaultValue={name}
           />
           <ImageInput />
-          <Button type="submit" size="lg" className="mt-2">
-            Submit
-          </Button>
+          <SubmitButton />
         </form>
       </div>
     </section>
