@@ -1,5 +1,5 @@
 import { SubmitButton } from "@/components/form/Buttons";
-import { CheckboxInput } from "@/components/form/CheckboxInput";
+import CheckboxInput from "@/components/form/CheckboxInput";
 import FormContainer from "@/components/form/FormContainer";
 import FormInput from "@/components/form/FormInput";
 import ImageInput from "@/components/form/ImageInput";
@@ -12,7 +12,7 @@ import { faker } from "@faker-js/faker";
 function CreateProductPage() {
   const name = faker.commerce.productName();
   const company = faker.company.name();
-  const number = faker.number.int({ min: 20, max: 25 });
+  const number = faker.number.int({ min: 20, max: 300 });
   const description = faker.lorem.paragraph({ min: 10, max: 12 });
 
   return (

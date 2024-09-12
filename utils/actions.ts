@@ -4,8 +4,8 @@ import db from "@/utils/db";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { imageSchema, productSchema, validateWithZodSchema } from "./schemas";
-import { error } from "console";
-import { uploadImage } from "./supabase";
+import { deleteImage, uploadImage } from "./supabase";
+import { revalidatePath } from "next/cache";
 
 const getAuthUser = async () => {
   const user = await currentUser();
@@ -13,6 +13,14 @@ const getAuthUser = async () => {
   if (!user) {
     redirect("/");
   }
+
+  return user;
+};
+
+const getAdminUser = async () => {
+  // ! Extra check. If the user id is not the same as the admin user id, redirect the user back to the home page
+  const user = await getAuthUser();
+  if (user.id !== process.env.ADMIN_USER_ID) redirect("/");
 
   return user;
 };
@@ -101,4 +109,94 @@ export const createProductAction = async (
   }
   // redirect to admin products
   redirect("/admin/products");
+};
+
+export const fetchAdminProducts = async () => {
+  await getAdminUser();
+
+  const products = await db.product.findMany({
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+
+  return products;
+};
+
+export const deleteProductAction = async (id: string) => {
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
+
+  // Check if the user is an admin
+  await getAdminUser();
+
+  try {
+    // We can use revalidate on the try block, but don't use redirect
+    // We are also get back the product info from this request
+    const product = await db.product.delete({
+      where: {
+        id,
+      },
+    });
+    // We pass in the product image(url) to the helper function that will be needed in order to delete the image in the bucket
+    deleteImage(product.image);
+
+    revalidatePath("/admin/products");
+    return { message: "Successfully deleted product" };
+  } catch (error) {
+    return renderError(error);
+  }
+};
+
+export const fetchAdminProduct = async (id: string) => {
+  const product = await db.product.findUnique({
+    where: {
+      id,
+    },
+  });
+  if (!product) redirect("/admin/products");
+
+  return product;
+};
+
+export const fetchAdminProductImage = async (id: string) => {
+  const product = await db.product.findUnique({
+    where: {
+      id,
+    },
+  });
+  if (!product) redirect("/admin/products");
+};
+
+export const updateSingleProduct = async (
+  prevState: any,
+  formData: FormData
+) => {
+  await getAdminUser();
+
+  try {
+    const id = formData.get("id") as string;
+    const rawData = Object.fromEntries(formData);
+    const validatedFields = validateWithZodSchema(productSchema, rawData);
+
+    await db.product.update({
+      where: {
+        id,
+      },
+      data: {
+        ...validatedFields,
+      },
+    });
+
+    revalidatePath(`/admin/products/${id}/edit`);
+    return { message: "Successfully updated product" };
+  } catch (error) {
+    return renderError(error);
+  }
+};
+
+export const updateProductImage = async (
+  prevState: any,
+  formData: FormData
+) => {
+  return { message: "Test" };
 };

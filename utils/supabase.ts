@@ -23,3 +23,11 @@ export const uploadImage = async (image: File) => {
   // but here, we are just getting the public url if there is a data
   return supabase.storage.from(bucket).getPublicUrl(newName).data.publicUrl;
 };
+
+export const deleteImage = (url: string) => {
+  const imageName = url.split("/").pop(); // We split the url then we pop the last item because that's what contains the image name that we will be passing in to the method
+  // Image could possibly be undefined and if it is then we throw an error
+  if (!imageName) throw new Error("Image URL not found.");
+  // Then we remove that image on the bucket
+  return supabase.storage.from(bucket).remove([imageName]);
+};
