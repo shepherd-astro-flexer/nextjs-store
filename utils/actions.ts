@@ -158,16 +158,7 @@ export const fetchAdminProduct = async (id: string) => {
   return product;
 };
 
-export const fetchAdminProductImage = async (id: string) => {
-  const product = await db.product.findUnique({
-    where: {
-      id,
-    },
-  });
-  if (!product) redirect("/admin/products");
-};
-
-export const updateSingleProduct = async (
+export const updateSingleProductAction = async (
   prevState: any,
   formData: FormData
 ) => {
@@ -194,9 +185,36 @@ export const updateSingleProduct = async (
   }
 };
 
-export const updateProductImage = async (
+export const updateProductImageAction = async (
   prevState: any,
   formData: FormData
 ) => {
-  return { message: "Test" };
+  await getAdminUser();
+
+  try {
+    const id = formData.get("id") as string;
+    const url = formData.get("url") as string;
+    const file = formData.get("image") as File;
+    const validatedFile = validateWithZodSchema(imageSchema, { image: file });
+    // Image is looking for the url
+    const image = await uploadImage(validatedFile.image);
+    // Delete the old image right away
+    await deleteImage(url);
+
+    await db.product.update({
+      where: {
+        id,
+      },
+      data: {
+        image,
+      },
+    });
+    // We delete the previous image by using the previous url
+    // Revalidate to the same path
+    revalidatePath(`/admin/products/${id}/edit`);
+    // Return message for the toast
+    return { message: "Image updated successfully." };
+  } catch (error) {
+    return renderError(error);
+  }
 };
