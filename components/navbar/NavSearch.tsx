@@ -7,7 +7,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 function NavSearch() {
   const searchParams = useSearchParams();
-  // console.log(searchParams.get("search"));
+
   const { replace } = useRouter();
   const [search, setSearch] = useState(
     searchParams.get("search")?.toString() || ""
@@ -23,7 +23,7 @@ function NavSearch() {
       params.delete("search");
     }
 
-    console.log(params);
+    // console.log(params);
     // Now we navigate to or replace the url using the replace method by useRouter()
     replace(`/products?${params.toString()}`);
   }, 500);

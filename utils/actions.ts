@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/utils/db";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { imageSchema, productSchema, validateWithZodSchema } from "./schemas";
 import { deleteImage, uploadImage } from "./supabase";
@@ -217,4 +217,68 @@ export const updateProductImageAction = async (
   } catch (error) {
     return renderError(error);
   }
+};
+
+export const fetchFavoriteId = async ({ productId }: { productId: string }) => {
+  const user = await getAuthUser();
+
+  const favorite = await db.favorite.findFirst({
+    where: {
+      productId,
+      clerkId: user.id,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  return favorite?.id || null;
+};
+
+export const toggleFavoriteAction = async (prevState: {
+  favoriteId: string | null;
+  productId: string;
+  pathname: string;
+}) => {
+  const user = await getAuthUser();
+  const { favoriteId, pathname, productId } = prevState;
+
+  try {
+    // ! id is automatically generated
+    if (favoriteId) {
+      await db.favorite.delete({
+        where: {
+          id: favoriteId,
+        },
+      });
+    } else {
+      await db.favorite.create({
+        data: {
+          productId,
+          clerkId: user.id,
+        },
+      });
+    }
+
+    revalidatePath(pathname);
+    return {
+      message: favoriteId ? "Removed from favorites." : "Added to favorites.",
+    };
+  } catch (error) {
+    return renderError(error);
+  }
+};
+
+export const fetchUserFavorites = async () => {
+  const user = await getAuthUser();
+
+  const favorites = await db.favorite.findMany({
+    where: {
+      clerkId: user.id,
+    },
+    include: {
+      product: true,
+    },
+  });
+  return favorites;
 };

@@ -28,6 +28,7 @@ function HeroCarousel() {
                       src={image}
                       alt="hero"
                       className="w-full h-96 rounded object-cover"
+                      priority
                     />
                   </CardContent>
                 </Card>

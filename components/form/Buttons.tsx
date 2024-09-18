@@ -7,6 +7,10 @@ import { cn } from "@/lib/utils";
 import { FiTrash2 } from "react-icons/fi";
 import FormContainer from "./FormContainer";
 import { deleteProductAction } from "@/utils/actions";
+import { SignInButton } from "@clerk/nextjs";
+import { FaHeart } from "react-icons/fa6";
+import { FaRegHeart } from "react-icons/fa";
+import { auth } from "@clerk/nextjs/server";
 
 type ButtonSizeProp = "default" | "lg" | "sm";
 
@@ -65,3 +69,33 @@ export function DeleteProduct({ id }: { id: string }) {
     </FormContainer>
   );
 }
+
+export const FavoriteSignInButton = () => {
+  return (
+    <SignInButton mode="modal">
+      <Button variant="outline" size="icon" className="p-2">
+        <FaRegHeart />
+      </Button>
+    </SignInButton>
+  );
+};
+
+export const FavoriteSubmitButton = ({
+  isFavorite,
+}: {
+  isFavorite: boolean;
+}) => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button variant="outline" size="icon" type="submit" className="p-2">
+      {pending ? (
+        <ReloadIcon className="animate-spin" />
+      ) : isFavorite ? (
+        <FaHeart />
+      ) : (
+        <FaRegHeart />
+      )}
+    </Button>
+  );
+};
