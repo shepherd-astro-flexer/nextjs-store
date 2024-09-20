@@ -282,3 +282,7 @@ export const fetchUserFavorites = async () => {
   });
   return favorites;
 };
+
+export const createReviewAction = async () => {
+  return { message: "Review successful." };
+};

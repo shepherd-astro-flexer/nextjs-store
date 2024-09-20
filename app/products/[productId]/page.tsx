@@ -1,4 +1,5 @@
 import FavoriteToggleButton from "@/components/products/FavoriteToggleButton";
+import ProductReviews from "@/components/reviews/ProductReviews";
 import AddToCart from "@/components/single-product/AddToCart";
 import BreadCrumbs from "@/components/single-product/BreadCrumbs";
 import ProductRating from "@/components/single-product/ProductRating";
@@ -46,6 +47,7 @@ async function ProductDetails({ params }: { params: { productId: string } }) {
           <AddToCart productId={productId} />
         </div>
       </div>
+      <ProductReviews />
     </section>
   );
 }
