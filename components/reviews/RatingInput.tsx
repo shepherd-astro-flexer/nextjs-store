@@ -1,7 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import { Label } from "../ui/label";
 import {
   Select,
   SelectContent,
+  SelectGroup,
+  SelectItem,
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
@@ -11,16 +16,28 @@ function RatingInput() {
     let value = idx + 1;
 
     return value.toString();
-  });
-  console.log(numbers);
+  }).reverse();
+
   return (
     <div className="max-w-xs">
-      <Label htmlFor="rating">rating</Label>
-      <Select name="rating" value={numbers[0]}>
+      <Label htmlFor="rating" className="capitalize">
+        rating
+      </Label>
+      <Select name="rating" defaultValue={numbers[0]}>
         <SelectTrigger>
           <SelectValue />
         </SelectTrigger>
-        {/* <SelectContent id="rating">{numbers.map()}</SelectContent> */}
+        <SelectContent>
+          <SelectGroup>
+            {numbers.map((number) => {
+              return (
+                <SelectItem key={number} value={number}>
+                  {number}
+                </SelectItem>
+              );
+            })}
+          </SelectGroup>
+        </SelectContent>
       </Select>
     </div>
   );

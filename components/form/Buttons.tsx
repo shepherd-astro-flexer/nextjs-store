@@ -15,7 +15,7 @@ import { auth } from "@clerk/nextjs/server";
 type ButtonSizeProp = "default" | "lg" | "sm";
 
 type SubmitButtonProps = {
-  text: string;
+  text?: string;
   className?: string;
   size?: ButtonSizeProp;
 };
@@ -40,7 +40,7 @@ export const SubmitButton = ({
           Please wait...
         </>
       ) : (
-        text
+        text || "submit"
       )}
     </Button>
   );

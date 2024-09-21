@@ -47,7 +47,7 @@ async function ProductDetails({ params }: { params: { productId: string } }) {
           <AddToCart productId={productId} />
         </div>
       </div>
-      <ProductReviews />
+      <ProductReviews productId={productId} />
     </section>
   );
 }
