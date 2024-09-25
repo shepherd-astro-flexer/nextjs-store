@@ -13,10 +13,9 @@ import { SubmitButton } from "../form/Buttons";
 function ProductReviews({ productId }: { productId: string }) {
   const [isShowReviewForm, setIsShowReviewForm] = useState(false);
   const { user } = useClerk();
-  console.log(productId);
+
   return (
-    <div>
-      <h1 className="capitalize">product reviews</h1>
+    <div className="mt-8">
       <Button
         size="lg"
         className="capitalize"
