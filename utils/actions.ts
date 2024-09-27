@@ -325,3 +325,23 @@ export const fetchAllReviews = async ({ productId }: { productId: string }) => {
 
   return reviews;
 };
+
+export const fetchProductRating = async (productId: string) => {
+  const rating = await db.review.groupBy({
+    by: ["productId"],
+    _avg: {
+      rating: true,
+    },
+    _count: {
+      rating: true,
+    },
+    where: {
+      productId,
+    },
+  });
+  // rating could be empty, so we need to return some value when that happens
+  return {
+    rating: rating[0]?._avg?.rating?.toFixed(1) ?? 0,
+    count: rating[0]?._count?.rating ?? 0,
+  };
+};
