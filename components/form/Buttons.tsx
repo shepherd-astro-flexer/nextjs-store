@@ -11,6 +11,7 @@ import { SignInButton } from "@clerk/nextjs";
 import { FaHeart } from "react-icons/fa6";
 import { FaRegHeart } from "react-icons/fa";
 import { auth } from "@clerk/nextjs/server";
+import { actionFunction } from "@/utils/types";
 
 type ButtonSizeProp = "default" | "lg" | "sm";
 
@@ -60,11 +61,17 @@ const DeleteButton = () => {
   );
 };
 
-export function DeleteProduct({ id }: { id: string }) {
-  const deleteProdutActionWithId = deleteProductAction.bind(null, id);
+export function DeleteProduct({
+  id,
+  action,
+}: {
+  id: string;
+  action: actionFunction;
+}) {
+  const deleteProductActionWithId = action.bind(null, id);
 
   return (
-    <FormContainer action={deleteProdutActionWithId}>
+    <FormContainer action={deleteProductActionWithId}>
       <DeleteButton />
     </FormContainer>
   );

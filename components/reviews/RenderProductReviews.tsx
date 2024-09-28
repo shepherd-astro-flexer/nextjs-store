@@ -24,7 +24,7 @@ async function RenderProductReviews({ productId }: { productId: string }) {
                     alt={authorName}
                     width={48}
                     height={48}
-                    className="rounded-full"
+                    className="rounded-full object-cover w-12 h-12"
                   />
                   <div className="ml-4">
                     <h1 className="mb-1">{authorName}</h1>

@@ -339,9 +339,44 @@ export const fetchProductRating = async (productId: string) => {
       productId,
     },
   });
+
   // rating could be empty, so we need to return some value when that happens
   return {
     rating: rating[0]?._avg?.rating?.toFixed(1) ?? 0,
     count: rating[0]?._count?.rating ?? 0,
   };
+};
+
+export const fetchAllUserReviews = async () => {
+  const user = await getAuthUser();
+
+  const reviews = await db.review.findMany({
+    where: {
+      clerkId: user.id,
+    },
+    include: {
+      product: true,
+    },
+  });
+
+  return reviews;
+};
+
+export const deleteReviewAction = async (id: string) => {
+  await getAuthUser();
+
+  try {
+    await db.review.delete({
+      where: {
+        id,
+      },
+    });
+
+    revalidatePath("/reviews");
+    return {
+      message: "Successfully deleted review.",
+    };
+  } catch (error) {
+    return renderError(error);
+  }
 };

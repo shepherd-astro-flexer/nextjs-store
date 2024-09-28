@@ -13,6 +13,7 @@ import {
 import { FiEdit } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import { DeleteProduct } from "@/components/form/Buttons";
+import { deleteProductAction } from "@/utils/actions";
 import EmptyList from "@/components/global/EmptyList";
 
 async function AdminProductsPage() {
@@ -57,7 +58,7 @@ async function AdminProductsPage() {
                       <FiEdit />
                     </Link>
                   </Button>
-                  <DeleteProduct id={productId} />
+                  <DeleteProduct id={productId} action={deleteProductAction} />
                 </TableCell>
               </TableRow>
             );
