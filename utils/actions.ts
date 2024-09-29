@@ -354,8 +354,16 @@ export const fetchAllUserReviews = async () => {
     where: {
       clerkId: user.id,
     },
-    include: {
-      product: true,
+    select: {
+      comment: true,
+      rating: true,
+      id: true,
+      product: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
     },
   });
 
@@ -379,4 +387,17 @@ export const deleteReviewAction = async (id: string) => {
   } catch (error) {
     return renderError(error);
   }
+};
+
+export const fetchUserProductReview = async (productId: string) => {
+  const user = await getAuthUser();
+
+  const review = await db.review.findFirst({
+    where: {
+      clerkId: user.id,
+      productId,
+    },
+  });
+
+  return review;
 };

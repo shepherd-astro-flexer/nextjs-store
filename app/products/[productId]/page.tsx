@@ -5,8 +5,9 @@ import AddToCart from "@/components/single-product/AddToCart";
 import BreadCrumbs from "@/components/single-product/BreadCrumbs";
 import ProductRating from "@/components/single-product/ProductRating";
 import ShareButton from "@/components/single-product/ShareButton";
-import { fetchSingleProduct } from "@/utils/actions";
+import { fetchSingleProduct, fetchUserProductReview } from "@/utils/actions";
 import { formatCurrency } from "@/utils/format";
+import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 
 async function ProductDetails({ params }: { params: { productId: string } }) {
@@ -14,6 +15,7 @@ async function ProductDetails({ params }: { params: { productId: string } }) {
   const product = await fetchSingleProduct({ productId });
   const { company, image, name, price, description } = product;
   const dollarsAmount = formatCurrency(price);
+  const showReviewButton = await fetchUserProductReview(productId);
 
   return (
     <section>
@@ -49,7 +51,7 @@ async function ProductDetails({ params }: { params: { productId: string } }) {
         </div>
       </div>
       <RenderProductReviews productId={productId} />
-      <ProductReviews productId={productId} />
+      {!showReviewButton && <ProductReviews productId={productId} />}
     </section>
   );
 }
