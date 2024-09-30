@@ -51,7 +51,7 @@ async function ProductDetails({ params }: { params: { productId: string } }) {
         </div>
       </div>
       <RenderProductReviews productId={productId} />
-      {!showReviewButton && <ProductReviews productId={productId} />}
+      {showReviewButton && <ProductReviews productId={productId} />}
     </section>
   );
 }
