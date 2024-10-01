@@ -390,16 +390,16 @@ export const deleteReviewAction = async (id: string) => {
 };
 
 export const fetchUserProductReview = async (productId: string) => {
-  const user = await currentUser();
+  const { userId } = auth();
 
   const review = await db.review.findFirst({
     where: {
-      clerkId: user?.id,
+      clerkId: userId ?? "",
       productId,
     },
   });
 
-  return user && !review;
+  return userId && !review;
 };
 
 export const fetchCartItems = async () => {
