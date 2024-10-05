@@ -417,7 +417,9 @@ export const fetchCartItems = async () => {
   return cart?.numItemsInCart || 0;
 };
 
-const fetchProduct = async () => {};
+const fetchProduct = async () => {
+  await getAuthUser();
+};
 
 export const fetchOrCreateCart = async () => {};
 
